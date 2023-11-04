@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider } from "react-router-dom";
+import { ThemeProvider } from '@mui/material/styles';
+import { UserProvider } from './util/Auth';
+import theme from "./theme/theme";
+import router from "./navigation/Router";
+import { FirestoreProvider, useFirebaseApp } from 'reactfire';
+import { getFirestore } from "firebase/firestore";
+
 
 function App() {
+  const app = useFirebaseApp();
+  const firestoreInstance = getFirestore(app);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <UserProvider>
+        <FirestoreProvider sdk={firestoreInstance}>
+          <RouterProvider router={router} />
+        </FirestoreProvider>
+      </UserProvider>
+    </ThemeProvider>
   );
 }
 
