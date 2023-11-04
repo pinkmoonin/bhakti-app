@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter, createHashRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import DashboardPage from "../pages/DashboardPage";
 import MantraPage from "../pages/MantraPage";
@@ -19,7 +19,7 @@ const Root = () => {
 
 
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: "/",
         element: <Root />,
