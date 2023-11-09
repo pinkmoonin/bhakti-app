@@ -1,14 +1,15 @@
 import { Box, Button, Dialog, DialogContent, DialogTitle, DialogActions, Grid, TextField, Card, CardMedia, CardContent, Typography, Skeleton, Toolbar, ImageList, Stack } from "@mui/material";
-import { SimpleDialogProps } from "../components/SimpleDialog";
+import { SimpleDialogProps } from "../../components/SimpleDialog";
 import { useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { SubmitHandler, useForm } from "react-hook-form";
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 import { collection, serverTimestamp, addDoc, onSnapshot, query, orderBy, limit, DocumentData } from "firebase/firestore";
 import { useFirestoreCollectionData } from "reactfire";
 import { MdAdd } from "react-icons/md";
 import styled from "@emotion/styled";
-import AppToolbar from "../components/AppToolbar";
+import AppToolbar from "../../components/AppToolbar";
+import { url } from "inspector";
 
 type StoryInputs = {
     title: string,
@@ -137,7 +138,7 @@ function ReadingPage() {
 
     const { status, data } = useFirestoreCollectionData(q);
 
-    const isLoading = status === "loading" || !data
+    const isLoading = status === "loading" || !data;
 
     if (status === "error") {
         return <>Error.</>;
@@ -156,7 +157,7 @@ function ReadingPage() {
                 </Button>
             </AppToolbar>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
                 {
                     isLoading ? fakeData.map((doc) => (
                         <Grid item key={doc.id} xs={3}>
@@ -184,27 +185,42 @@ export default ReadingPage;
 
 function StoryCard({ doc }: DocumentData) {
     return <Card sx={{ width: '100%', minHeight: '100%' }}>
-        {doc.imageUrl ? (
-            <CardMedia
-                component="img"
-                height="256"
-                image={doc.imageUrl}
-                alt="image"
-                sx={{ objectPosition: 'top center', display: 'inline-block' }}
-            />
-        ) : (
+        {doc.imageUrl ? (<Box sx={{
+            background: `linear-gradient(180deg, 
+                rgba(0,0,0, 0.4), 
+                rgba(0,0,0, 0.0)), url(${doc.imageUrl});`,
+            backgroundSize: "cover",
+            height: 256,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "top center"
+
+        }}>
+            <Typography
+                variant="subtitle1"
+                color="white"
+                textAlign="center"
+                sx={{ textShadow: "1px 2px #000", pt: 1 }}>
+                {doc.title}
+            </Typography>
+        </Box>) : (
             <Skeleton variant="rectangular" height={256} animation="wave" />
         )}
-        <CardContent>
-            {doc.title ? (
-                <Typography gutterBottom variant="h6" component="div">
-                    {doc.title}
+        <CardContent sx={{ pt: 0.5 }}>
+            {doc.timestamp ? (
+                <Typography
+                    variant="overline"
+
+                    fontSize={10.5}
+                    color="text.secondary">
+                    {doc.timestamp.toDate().toDateString()}
                 </Typography>
             ) : (
                 <Skeleton variant="text" width="80%" animation="wave" />
             )}
+
+
             {doc.content ? (
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" >
                     {doc.content}
                 </Typography>
             ) : (

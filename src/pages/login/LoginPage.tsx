@@ -1,10 +1,10 @@
 import { Alert, Avatar, Box, Button, CircularProgress, Container, TextField, Typography } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm, SubmitHandler } from "react-hook-form"
-import { auth } from "../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { useUserContext } from "../util/Auth";
+import { useUserContext } from "../../util/Auth";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 

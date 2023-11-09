@@ -9,8 +9,8 @@ import { GiMeditation } from 'react-icons/gi'
 import { LuLayoutDashboard } from 'react-icons/lu'
 import { BsFileMusic, BsBook } from 'react-icons/bs'
 import { MdLogout } from 'react-icons/md'
-import { auth } from '../firebase/firebase';
-import { useUserContext } from '../util/Auth';
+import { auth } from '../../firebase/firebase';
+import { useUserContext } from '../../util/Auth';
 import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { IconType } from 'react-icons/lib';
@@ -122,7 +122,7 @@ function HomePage() {
     }
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: "flex" }}>
             <NavigationDrawer
                 items={navItems}
                 currentRoute={location.pathname}
@@ -130,12 +130,7 @@ function HomePage() {
                     navigate(route);
                 }} />
 
-            <Box component="main"
-                sx={{
-                    flexGrow: 1,
-                    pl: 4,
-                    pr: 4
-                }}>
+            <Box component="main" sx={{ flexGrow: 1, pl: 4, pr: 4 }}>
                 <Outlet />
             </Box>
         </Box>

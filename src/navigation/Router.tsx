@@ -1,10 +1,10 @@
-import { Navigate, createBrowserRouter, createHashRouter } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import DashboardPage from "../pages/DashboardPage";
-import MantraPage from "../pages/MantraPage";
-import BhajanPage from "../pages/BhajanPage";
-import ReadingPage from "../pages/ReadingPage";
-import LoginPage from "../pages/LoginPage";
+import { Navigate, createHashRouter } from "react-router-dom";
+import HomePage from "../pages/home/HomePage";
+import DashboardPage from "../pages/dashboard/DashboardPage";
+import MantraPage from "../pages/mantra/MantraPage";
+import BhajanPage from "../pages/bhajan/BhajanPage";
+import ReadingPage from "../pages/story/ReadingPage";
+import LoginPage from "../pages/login/LoginPage";
 import { useUserContext } from "../util/Auth";
 
 const Root = () => {

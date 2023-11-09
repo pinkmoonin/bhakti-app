@@ -5,7 +5,7 @@ import theme from "./theme/theme";
 import router from "./navigation/Router";
 import { FirestoreProvider, useFirebaseApp } from 'reactfire';
 import { getFirestore } from "firebase/firestore";
-
+import { SnackbarProvider } from "notistack";
 
 function App() {
   const app = useFirebaseApp();
@@ -13,11 +13,14 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <FirestoreProvider sdk={firestoreInstance}>
-          <RouterProvider router={router} />
-        </FirestoreProvider>
-      </UserProvider>
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+        <UserProvider>
+          <FirestoreProvider sdk={firestoreInstance}>
+            <RouterProvider router={router} />
+          </FirestoreProvider>
+        </UserProvider>
+      </SnackbarProvider>
+
     </ThemeProvider>
   );
 }
