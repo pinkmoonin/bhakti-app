@@ -13,7 +13,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+      <SnackbarProvider
+        maxSnack={3}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={3000}>
         <UserProvider>
           <FirestoreProvider sdk={firestoreInstance}>
             <RouterProvider router={router} />

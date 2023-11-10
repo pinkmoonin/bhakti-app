@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import { Button, styled } from '@mui/material'
 import { MdCloudUpload } from 'react-icons/md';
 
@@ -14,7 +13,6 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-
 type UploadFileButtonProps = {
     accept: string,
     disabled: boolean,
@@ -28,10 +26,11 @@ const UploadFileButton = ({ accept, disabled, onFileChange }: UploadFileButtonPr
         disabled={disabled}
         startIcon={<MdCloudUpload />}
         sx={{
-            border: '1px dashed #A3A3A3', // Set the dashed border style
-            borderRadius: '4px', // Add rounded corners if desired
+            border: '1px dashed #A3A3A3',
+            borderRadius: '4px',
             width: '100%',
-            minHeight: '56px'
+            minHeight: '56px',
+            '&:hover': { border: '1px dashed' }
         }}>
         Upload file
         <VisuallyHiddenInput

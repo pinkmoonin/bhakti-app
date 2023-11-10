@@ -7,55 +7,40 @@ import { FirebaseError } from "firebase/app";
 import { useUserContext } from "../../util/Auth";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 type LoginInputs = {
     email: string,
     password: string
 }
 
-type LoginResult = {
-    isSuccess: boolean,
-    message: string
-}
-
 function LoginPage() {
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState<LoginResult | undefined>(undefined);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginInputs>();
+    const { enqueueSnackbar } = useSnackbar();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginInputs>();
 
     const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
         setLoading(true);
         try {
             const result = await signInWithEmailAndPassword(auth, data.email, data.password);
-            setResult({
-                isSuccess: true,
-                message: "Login successful!"
-            });
             console.log(result);
+            //enqueueSnackbar("Logged in successfully!", { variant: "success" });
         } catch (error) {
-            let message = "Something went wrong. Try again!"
+            let message = "Login failed.Please try again!"
             if (error instanceof FirebaseError) {
                 message = error.code;
+
             }
-            setResult({
-                isSuccess: false,
-                message: message
-            });
+            enqueueSnackbar(message, { variant: "error" });;
         } finally {
             setLoading(false);
         }
     };
 
-
     const currentUser = useUserContext();
     if (currentUser?.user) {
         return <Navigate to="/" replace={true} />
     }
-
 
     return (
         <Container component="main" maxWidth="xs">
@@ -67,22 +52,10 @@ function LoginPage() {
                     alignItems: 'center',
                 }}
             >
-                {result && <Alert
-                    severity={result.isSuccess ? "success" : "error"}
-                    sx={{ width: '100%' }}
-                    onClose={() => {
-                        setResult(undefined);
-                    }}
-                >
-                    {result.message}
-                </Alert>}
-
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
-                    Admin Log in
-                </Typography>
+                <Typography component="h5" variant="h5">Admin Log in</Typography>
 
                 <Box component="form" method="post" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
 
@@ -98,6 +71,7 @@ function LoginPage() {
                         error={errors.email && true}
                         {...register("email", { required: "Please enter admin id." })}
                     />
+
                     <TextField
                         margin="normal"
                         fullWidth
@@ -119,16 +93,17 @@ function LoginPage() {
                             }
                         })}
                     />
+
                     <Box sx={{ m: 1, position: 'relative' }}>
                         <Button
                             type="submit"
                             fullWidth
                             disabled={loading}
                             variant="contained"
-                            sx={{ mt: 2, mb: 2 }}
-                        >
+                            sx={{ mt: 2, mb: 2 }}>
                             Log In
                         </Button>
+
                         {loading && (
                             <CircularProgress
                                 color="secondary"

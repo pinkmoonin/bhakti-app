@@ -50,8 +50,8 @@ function AddMantraDialog({ open, onClose }: SimpleDialogProps) {
             reset();
             setFileError(false);
             setMantraFile(null);
-            enqueueSnackbar("Mantra added successfully!", { variant: "success" });
             onClose('success');
+            enqueueSnackbar("Mantra added successfully!", { variant: "success" });
         } catch (error) {
             console.log(error);
             enqueueSnackbar(`${error}`, { variant: "error" });

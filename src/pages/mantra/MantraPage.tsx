@@ -1,4 +1,4 @@
-import { Backdrop, Box, Button, CircularProgress, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { MdAdd } from 'react-icons/md'
 import AppToolbar from "../../components/AppToolbar";
@@ -9,6 +9,7 @@ import { db } from "../../firebase/firebase";
 import { useFirestoreCollectionData } from "reactfire";
 import { deleteMantraFromDb } from "./addMantraToDb";
 import LoadingTableSkeleton from "./LoadingTableSkeleton";
+import LoadingBackdrop from "../../components/LoadingBackdrop";
 
 function buildFirestoreQuery(page: number, rowsPerPage: number) {
     return query(
@@ -80,11 +81,7 @@ function MantraPage() {
             </AppToolbar>
             {componentToRender}
             <AddMantraDialog open={dialogOpen} onClose={() => { setDialogOpen(false); }} />
-            <Backdrop
-                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={openBackdrop}>
-                <CircularProgress />
-            </Backdrop>
+            <LoadingBackdrop open={openBackdrop} />
         </Box>
     );
 }

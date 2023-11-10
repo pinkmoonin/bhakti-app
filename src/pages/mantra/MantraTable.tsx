@@ -11,6 +11,7 @@ import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { DEFAULT_ITEMS_PER_PAGE } from "./MantraPage";
 import { DataGrid } from "@mui/x-data-grid";
+import DeleteButton from "../../components/DeleteButton";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -33,21 +34,6 @@ export interface MantaTableProps {
     onRowsPerPageChange: (page: number) => void,
     onDeleteClick: (mantraId: string) => void
 }
-
-interface DeleteButtonProps {
-    onClick: () => void
-}
-
-function DeleteButton({ onClick }: DeleteButtonProps) {
-    return <IconButton
-        aria-label="delete"
-        size="small"
-        color="error"
-        onClick={onClick}>
-        <RiDeleteBin6Line />
-    </IconButton>
-}
-
 
 type LyricsProps = { lyrics?: string; };
 

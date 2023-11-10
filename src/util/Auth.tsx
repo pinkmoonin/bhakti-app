@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase";
 import { User } from "firebase/auth";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 export type UserType = {
     user: User | null,
@@ -23,17 +24,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
     }, []);
 
-    if (pending) {
-        return <>Loading...</>
-    }
 
     return (
-        <UserContext.Provider
+        pending ? <Backdrop open sx={{ background: 'transparent' }}>
+            <CircularProgress />
+        </Backdrop> : <UserContext.Provider
             value={{
                 user: currentUser,
                 setUser: setCurrentUser
-            }}
-        >
+            }}>
             {children}
         </UserContext.Provider>
     );
